@@ -1,0 +1,15 @@
+body{
+    background-color: lightgreen;
+}
+
+img{
+    width: 60%;
+    position: absolute;
+    left: 20%;
+}
+
+h1{
+    text-align: center;
+    color: white;
+    margin: 40px;
+}

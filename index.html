@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title></title>
+</head>
+<script src = "main.js"></script>
+<body>
+    <div class = "header">
+    <h1>Ételrendelés</h1>
+    </div>
+    <div class = "title">
+    <h2>Név</h2>
+    </div>
+    <div class = "login">
+    <input type = "text" placeholder = "Név" name = "name" id = "name">
+    <br/>
+    </div>
+    <div id = "menu">
+        <div class = "title">
+        <h2>Leves</h2>
+        </div>
+        <div id = "soup">
+            <div onclick = "soup(true)" class = "soup_Btn" id = "yes">Kérek</div>
+            <br />
+            <div onclick = "soup(false)" class = "soup_Btn" id = "no">Nem kérek</div>
+        </div>
+        <div class = "title">
+            <h2>Menü</h2>
+        </div>
+        <div id = "menu_Images">
+            <div class = "menus" id = "menu1">
+            <img src = "menu.png" class = "menu_Icon" onclick = "choose_Menu('1')">
+            <h2>Menü 1</h2>
+            <input type = "button" value = "Menü megtekintése" onclick = "looking_Menu('1')" class = "look_Btn">
+            <div id = "diplay_Menu1" class = "menu_List"></div>
+            </div>
+            <div class = "menus" id = "menu2">
+                <img src = "menu.png" class = "menu_Icon" onclick = "choose_Menu('2')">
+                <h2>Menu 2</h2>
+                <input type = "button" value = "Menü megtekintése" onclick = "looking_Menu('2')" class = "look_Btn">
+                <div id = "diplay_Menu2" class = "menu_List"></div>
+            </div>
+            <div class = "menus" id = "menu3">
+                <img src = "menu.png" class = "menu_Icon" onclick = "choose_Menu('3')">
+                <h3>Menu 3</h3>
+                <input type = "button" value = "Menü megtekintése" onclick = "looking_Menu('3')" class = "look_Btn">
+                <div id = "diplay_Menu3" class = "menu_List"></div>
+            </div>
+        </div>
+    </div>
+    <div id = "error_Div">
+
+    </div>
+    <input type = "button" value = "Rendelés leadása" id = "submit_Btn" onclick = "control_Datas()">
+</body>
+</html>
