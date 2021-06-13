@@ -1,6 +1,7 @@
-
 const fs = require("fs");
 const http = require("http");
+const os = require("os");
+const dns = require("dns");
 var count = 0;
 const requestListener = function(req, res) {
     path = req.url;
@@ -81,4 +82,7 @@ else if(req.method == "POST"){
     
 }
 const server = http.createServer(requestListener);
-server.listen(8000, '192.168.1.4');
+dns.lookup(os.hostname(), function (err, add, fam){
+    console.log("http://"+add+":8000");
+    server.listen(8000, add);
+})
