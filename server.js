@@ -7,7 +7,7 @@ const requestListener = function(req, res) {
     path = req.url;
     if (req.method == "GET"){
     if (path == "/"){
-        path = "/index.html"
+        path = "/login.html"
     }
     extension = "html";
     response = 404;
@@ -43,9 +43,10 @@ else if(req.method == "POST"){
         body += chunk;
       });
       req.on('end', function () {
-        //var body = JSON.stringify(body);
         var fs = require('fs');
         console.log(body["name"]);
+        var d = new Date();
+        console.log(d.getMonth()+1+"/"+d.getDate()+"/"+d.getFullYear());
         fs.writeFile(count+".json", body, function(err, result) {
         if(err) console.log('error', err);
         });

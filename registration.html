@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="login.css">
+    <title>Regisztrácó</title>
+</head>
+<script src = "registration.js"></script>
+<body>
+    <div id = "header">
+        <h1>Regisztrácó</h1>
+    </div>
+    <div id = "conteiner">
+        <label>Teljes név</label>
+        <br />
+        <input type = "text" id = "full_Name" placeholder="Teljes név" class = "text_Input">
+        <br />
+        <label>Felhasználónév</label>
+        <br />
+        <input type = "text" id = "userName" placeholder="Felhasználónév" class = "text_Input">
+        <br />
+        <label>Jelszó</label>
+        <br />
+        <input type = "password" placeholder="Jelszó" id = "password" class = "text_Input">
+        <br />
+        <label>Jelszó újra</label>
+        <br />
+        <input type = "password" placeholder="Jelszó" id = "rePassword" class = "text_Input">
+        <br />
+        <div id = "errors_Log"></div>
+        <input type = "button" value = "Regisztrácó" onclick = "control_All_Line()" class = "btn_Input">
+        <br />
+        <label>Van már fiókja? <a href = "login.html">Jelentkezzen be!</a></label>
+    </div>
+</body>
+</html>

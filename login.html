@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bejelentkezés</title>
+    <link rel="stylesheet" href="login.css">
+</head>
+<script src = "login.js"></script>
+<body>
+    <div id = "header">
+        <h1>Bejelentkezés</h1>
+    </div>
+    <div id = "conteiner">
+        <label>Felhasználónév</label>
+        <br />
+        <input type = "text" placeholder="Felhasználónév" id = "userName" class = "text_Input">
+        <br />
+        <label>Jelszó</label>
+        <br />
+        <input type = "password" placeholder="Jelszó" id = "password" class = "text_Input">
+        <br />
+        <div id = "errors_Log"></div>
+        <input type="button" value = "Bejelentkezés" class = "btn_Input" onclick = "control_All_Line()">
+        <br />
+        <label>Nincs még fiókja?<a href = "registration.html">Hozzon létre egyet!</a></label>
+    </div>
+</body>
+</html>

@@ -1,0 +1,51 @@
+*{
+    font-family: "ubuntu", sans-serif;
+}
+body{
+    background: linear-gradient(to right, #599e36, #248805);
+}
+
+label{
+    font-size: 20px;
+    padding: 3px;
+    margin: 4px;
+}
+
+input{
+    font-size: 20px;
+    padding: 10px;
+    border: 3px solid black;
+    border-radius: 10px;
+    padding: 5px;
+    margin: 10px;
+}
+
+#conteiner{
+    width: max-content;
+    margin: 10px auto;
+}
+
+#header{
+    width: max-content;
+    margin: 10px auto;
+}
+
+.btn_Input:hover{
+    background-color: #1e9437;
+    color: white;
+    cursor: pointer;
+}
+
+label a{
+    text-decoration: none;
+    color:#3cff00;
+}
+label a:hover{
+    text-decoration: underline;
+}
+
+#errors_Log{
+    color: red;
+    font-size: 13px;
+    font-weight: bold;
+}
