@@ -1,3 +1,4 @@
+var user;
 function encryption(text){
     var result = "";
     for (var i = 0; i < text.length; i++){
@@ -17,6 +18,28 @@ function create_Json_Document(){
     return file;
 }
 
+function send_Json_Document(){
+    file = create_Json_Document();
+    var req = new XMLHttpRequest();
+    req.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200){
+            if (this.responseText == "false"){
+                document.getElementById("errors").innerHTML = "Rossz felhasználónév vagy jelszó";
+            }
+            else{
+                window.user = document.getElementById("userName").value;
+                document.body.innerHTML = this.responseText;
+                element_Days();
+            }
+        }
+    };
+    req.open("POST", "select.html");
+    req.setRequestHeader("content-type", "application/json");
+    var dic = JSON.stringify(file);
+    console.log(dic);
+    req.send(dic);
+}
+
 function control_All_Line(){
     var list = ["userName", "password"];
     var errors = [];
@@ -30,6 +53,6 @@ function control_All_Line(){
         document.getElementById("errors_Log").innerHTML += errors[i];
     }
     if (errors.length == 0){
-        file = create_Json_Document();
+        send_Json_Document();
     }
 }

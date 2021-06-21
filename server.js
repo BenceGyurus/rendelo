@@ -3,6 +3,15 @@ const http = require("http");
 const os = require("os");
 const dns = require("dns");
 var count = 0;
+
+function login(data){
+    data = String(data);
+    console.log(data);
+    var obj = JSON.parse(data);
+    console.log(obj.userName);
+    
+}
+
 const requestListener = function(req, res) {
     path = req.url;
     if (req.method == "GET"){
@@ -44,13 +53,15 @@ else if(req.method == "POST"){
       });
       req.on('end', function () {
         var fs = require('fs');
-        console.log(body["name"]);
-        var d = new Date();
-        console.log(d.getMonth()+1+"/"+d.getDate()+"/"+d.getFullYear());
+        if (req.url == "/select.html"){
+            login(body);
+        }
+        else{
         fs.writeFile(count+".json", body, function(err, result) {
         if(err) console.log('error', err);
         });
         count++;
+        }
       });
       extension = "html";
       response = 404;

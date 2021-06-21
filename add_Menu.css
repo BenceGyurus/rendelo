@@ -1,0 +1,35 @@
+body{
+    background: linear-gradient(to right, rgb(0, 146, 0), green);
+    font-family: "ubuntu", sans-serif;
+}
+.grid{
+    border: 3px solid black;
+    padding: 20px;
+    margin: 20px auto;
+    width: 80%;
+    border-radius: 10px;
+}
+
+.grid h2{
+    font-size: 30px;
+}
+
+.grid label{
+    margin: 7px;
+    font-size: 17px;
+}
+
+.grid input{
+    margin: 10px;
+    border: 3px solid black;
+    font-size: 17px;
+    border-radius: 7px;
+    padding: 5px;
+}
+
+select{
+    padding: 7px;
+    margin: 3px auto;
+    border: 3px solid black;
+    font-size: 17px;
+}

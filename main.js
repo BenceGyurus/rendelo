@@ -9,6 +9,9 @@ function query_Data(url,method, callback){
        if (this.readyState == 4 && this.status == 200){
            callback(this.responseText);
        }
+       else if (this.status == 404){
+           callback("<h1 style = 'color: red; font-size: 20px;'>Nem sikerült lekérdezni a menüt</h1>");
+       }
    };
    req.open(method, url);
    req.send();
@@ -22,6 +25,7 @@ function element_Menu(data){
         window.errors.push("Egy menü tartalma üres, előfordul, hogy még nem töltték ki.")
     }
     document.getElementById(id).innerHTML = data;
+    console.log(window.number_Of_Selected_Day);
     document_Error_Div();
 }
 
@@ -41,7 +45,7 @@ function looking_Menu(number_Of_Menu){
     id = "diplay_Menu"+number_Of_Menu;
     if (document.getElementById(id).style.display != "block"){
         document.getElementById(id).style.display = "block"
-    query_Data("menu"+number_Of_Menu+".html", "GET", element_Menu);
+    query_Data("menu"+window.number_Of_Selected_Day+number_Of_Menu+".html", "GET", element_Menu);
     }
     else{
         document.getElementById(id).style.display = "none";
@@ -83,14 +87,10 @@ function document_Error_Div(){
 
 function control_Datas(){
     console.log("fut")
-    if (document.getElementById("name").value.length > 3 && window.data_List[1] != "null" && window.data_List[2] != ""){
-        window.data_List[0] = document.getElementById("name").value;
+    if (window.data_List[1] != "null" && window.data_List[2] != ""){
         send();
     }
     else{
-        if (document.getElementById("name").value.length <= 3){
-            window.errors.push("A név minimális hossza 4 karakter!");
-        }
         if (window.data_List[1] == "null"){
             window.errors.push("Kérem válasszon levest!");
         }
@@ -111,7 +111,7 @@ function send(){
    };
    req.open("POST", "rendeles.html");
 req.setRequestHeader("content-type", "application/json");
-   var dic = JSON.stringify({  name: window.data_List[0],
+   var dic = JSON.stringify({  name: window.user,
             soup: window.data_List[1],
             menu: window.data_List[2]
     });
