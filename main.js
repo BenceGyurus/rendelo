@@ -113,8 +113,9 @@ function send(){
 req.setRequestHeader("content-type", "application/json");
    var dic = JSON.stringify({  name: window.user,
             soup: window.data_List[1],
-            menu: window.data_List[2]
+            menu: Number(window.data_List[2]),
+            day: window.selected_Day,
+            number_Of_Day: window.number_Of_Selected_Day
     });
-    console.log(dic);
     req.send(dic);
 }

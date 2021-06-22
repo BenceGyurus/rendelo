@@ -1,39 +1,27 @@
 var user;
-function encryption(text){
-    var result = "";
-    for (var i = 0; i < text.length; i++){
-        if (i != text.length-1){
-        result+=parseInt(text[i].charCodeAt(0), 16)+" ";
-        }
-        else{
-            result+= parseInt(text[i].charCodeAt(0), 16);
-        }
-    }
-    return result;
-}
-
 function create_Json_Document(){
-    var file = {"userName": document.getElementById("userName").value,"password": encryption(document.getElementById("password").value)};
+    var file = {"userName": document.getElementById("userName").value,"password": document.getElementById("password").value};
     console.log(file);
     return file;
 }
+
+var token;
 
 function send_Json_Document(){
     file = create_Json_Document();
     var req = new XMLHttpRequest();
     req.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200){
-            if (this.responseText == "false"){
-                document.getElementById("errors").innerHTML = "Rossz felhasználónév vagy jelszó";
-            }
-            else{
-                window.user = document.getElementById("userName").value;
-                document.body.innerHTML = this.responseText;
-                element_Days();
+            data = this.responseText;
+            data = String(data);
+            data = JSON.parse(data);
+            if (data.token != "error"){
+                window.token = data.token;
+                get_New_Site("select.html", data.token);
             }
         }
     };
-    req.open("POST", "select.html");
+    req.open("POST", "GET_TOKEN");
     req.setRequestHeader("content-type", "application/json");
     var dic = JSON.stringify(file);
     console.log(dic);

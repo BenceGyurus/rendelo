@@ -17,3 +17,9 @@ function control_All_Line(){
         }
     }
 }
+
+function send_Data(){
+    var json_File = {
+        
+    };
+}

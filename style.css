@@ -124,3 +124,12 @@ input{
     font-size: 14px;
     color: red;
 }
+
+.menus input{
+    width: 80%;
+    font-size: 70%;
+}
+
+#submit_Btn{
+    left: 0px;
+}
