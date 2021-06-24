@@ -1,13 +1,13 @@
-var user;
+var user_Id;
 function create_Json_Document(){
     var file = {"userName": document.getElementById("userName").value,"password": document.getElementById("password").value};
-    console.log(file);
     return file;
 }
 
 var token;
 
 function send_Json_Document(){
+    if (document.getElementById("userName").value && document.getElementById("password").value){
     file = create_Json_Document();
     var req = new XMLHttpRequest();
     req.onreadystatechange = function() {
@@ -15,9 +15,13 @@ function send_Json_Document(){
             data = this.responseText;
             data = String(data);
             data = JSON.parse(data);
-            if (data.token != "error"){
+            if (!data.error){
                 window.token = data.token;
+                window.user_Id = data.id;
                 get_New_Site("select.html", data.token);
+            }
+            else{
+                document.getElementById("errors_Log").innerHTML = data.error;
             }
         }
     };
@@ -26,6 +30,7 @@ function send_Json_Document(){
     var dic = JSON.stringify(file);
     console.log(dic);
     req.send(dic);
+}
 }
 
 function control_All_Line(){

@@ -1,4 +1,5 @@
 function get_New_Site(site, token){
+    if (token){
     var req = new XMLHttpRequest();
         req.onreadystatechange = function() {
             if (this.readyState == 4 && this.status == 200){
@@ -11,4 +12,5 @@ function get_New_Site(site, token){
         req.open("POST", site);
         req.setRequestHeader("content-text", "application/json");
         req.send(token);
+    }
 }

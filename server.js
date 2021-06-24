@@ -37,26 +37,18 @@ function send_Path(req, res, path){
             }
         });
     }
-
-function send_Data(data, type,type2, res, req){
-    res.setHeader(type, type2);
-    res.writeHead(200);
-    res.end(data);
-    }
-
 var users = []       //ip       token
 function generate_Token(){
     token = "";
-    for (var i = 0; i < 20; i++){
+    for (var i = 0; i < 15; i++){
         token += String(Math.floor(Math.random()*10));
     }
     return token;
 }
 
 function registration(data){
-    data = String(data);
-    var json = JSON.parse(data);
-    console.log(json);
+    //request = true;
+    
 }
 function encryption(text){
     var result = "";
@@ -73,7 +65,6 @@ function encryption(text){
 
 function login(data, ip){
     data = String(data);
-    console.log(data);
     var obj = JSON.parse(data);
     change = false
     token = generate_Token();
@@ -99,7 +90,6 @@ const requestListener = function(req, res) {
     var apply = true;
     var rawdata = fs.readFileSync('only_Post.json');
     var file = JSON.parse(rawdata);
-    console.log(file.fileNames);
     for (var i = 0; i < file.fileNames.length; i++){
         if (path == "/"+file.fileNames[i] || path == file.fileNames[i]){
             apply = false;
@@ -163,20 +153,63 @@ else if(req.method == "POST"){
       req.on('end', function () {
         var fs = require('fs');
             body = String(body);
+            console.log(req.url);
             if (req.url == "/GET_TOKEN"){
+                user_Data = load_JSON_File(body)
                 get_File = false;
                 token_ = login(body, req.socket.remoteAddress);
-                data = '{"token":'+token_+'}';
-                //data = JSON.parse(json);
-                console.log(data);
-                res.setHeader("conetent-text", "application/json");
-                res.writeHead(200);
-                res.end(data);
+                const sqlite3 = require('sqlite3').verbose();
+                let db = new sqlite3.Database('users.db');
+                var datas;
+                db.serialize(function() {
+                    db.run("CREATE TABLE IF NOT EXISTS users (full_Name , username, password, rank, id)");
+                });
+                db.all("SELECT * FROM users WHERE username = ? AND password = ?", [user_Data.userName, encryption(user_Data.password)], function(err,rows){
+                    var data = '{"error": "Váratlan hiba történt bejelenetkezés közben"}'
+                    if (rows.length > 0){
+                        data = '{"token":'+token_+', "id" : '+rows[0].id+'}';
+                        //data = JSON.parse(json);
+                    }
+                    else{
+                        data = '{"error": "Hibás felhasználónév vagy jelszó"}'
+                    }
+                    res.setHeader("conetent-text", "application/json");
+                    res.writeHead(200);
+                    res.end(data);
+                });
             }
-            else if (req.url != "rendeles.html") {
+            else if (req.url == "/rendeles.html") {
                 data = load_JSON_File(body);
-                console.log(data);
                 send_Path(req, res, path);
+            }
+            else if (req.url == "/registration"){
+                console.log(body);
+                a = registration(body)
+                console.log(a);
+                var error;
+                data = String(data);
+                var json = JSON.parse(body);
+                console.log(json);
+                const sqlite3 = require('sqlite3').verbose();
+                let db = new sqlite3.Database('users.db');
+                var datas;
+                db.serialize(function() {
+                    db.run("CREATE TABLE IF NOT EXISTS users (full_Name , username, password, rank, id)");
+                });
+                db.all("SELECT * FROM users WHERE username = ?", [json.userName], function(err,rows){
+                    console.log(rows.length); 
+                    data = '{error: "A regisztrácó sikertelen, kérem próbálja újra később"}';
+                    if (rows.length > 0){
+                        data = '{"error": "Ez a felhasználónév már foglalt"}';
+                    }
+                    else{
+                        db.run("INSERT INTO users VALUES (?,?,?,?,?)", [json.full_Name, json.userName, encryption(json.password), "normal", generate_Token()], function(err){});
+                        data = '{"message": "Sikeres bejelenetkezés"}';
+                    }
+                    res.setHeader("content-text", "application/json");
+                    res.writeHead(200);
+                    res.end(data);
+                });
             }
             else{
                 get_File = false;

@@ -17,12 +17,18 @@ function element_Days(){
 }
 
 function next_Step(day){
-        window.selected_Day = day;
+        var now = false
+        if (day){
         name_Of_Day = ["Vasárnap", ["Hétfő", "monday"], ["Kedd", "tuesday"], ["Szerda", "wensday"], ["Csütörtök", "thursday"], ["Péntek", "friday"], "Szombat"];
         for (var i = 0; i < name_Of_Day.length; i++){
             if (name_Of_Day[i][1] == day){
                 window.number_Of_Selected_Day = i;
+                window.selected_Day = day;
+                now = true;
             }
         }
-        get_New_Site("index.html", window.token);
+        if (window.number_Of_Selected_Day && now){
+            get_New_Site("index.html", window.token);
+        }
+    }
 }

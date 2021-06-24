@@ -107,15 +107,20 @@ function send(){
    req.onreadystatechange = function(){
        if (this.readyState == 4 && this.status == 200){
             document.body.innerHTML = this.responseText;
+            window.user_Id = "";
+            window.token = "";
+            window.data_List = [];
+            window.data = [];
        }
    };
    req.open("POST", "rendeles.html");
-req.setRequestHeader("content-type", "application/json");
+    req.setRequestHeader("content-type", "application/json");
    var dic = JSON.stringify({  name: window.user,
             soup: window.data_List[1],
             menu: Number(window.data_List[2]),
             day: window.selected_Day,
-            number_Of_Day: window.number_Of_Selected_Day
+            number_Of_Day: window.number_Of_Selected_Day,
+            user_Id : window.user_Id
     });
     req.send(dic);
 }
