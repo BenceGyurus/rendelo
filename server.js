@@ -7,6 +7,26 @@ var count = 0;
 const extensions = ["html", "css", "js", "png", "svg", "img"];
 
 
+function get_File_Name(){
+    var y = new Date().getFullYear();
+    var m = new Date().getMonth();
+    var d = new Date().getDay();
+    var date = new Date().getDate();
+    firstDay = date-(d-1);
+    lastDay = firstDay+4;
+    fileName = y+"_"+m+"_"+firstDay+"_"+lastDay
+    return fileName
+}
+
+function create_Html_From_Json(data){
+    console.log(data);
+    var list = [data.monday, data.tuesday, data.wensday, data.thursday, data.friday];
+    console.log(list);
+    data = JSON.stringify(data);
+    fileName = get_File_Name();
+    fs.writeFileSync("json_menus/"+fileName+'.json', data);
+}
+
 function send_Path(req, res, path){
         extension = "html";
         response = 404;
@@ -182,6 +202,10 @@ else if(req.method == "POST"){
                 data = load_JSON_File(body);
                 send_Path(req, res, path);
             }
+            else if (req.url == "/SET_MENU"){
+                create_Html_From_Json(load_JSON_File(body));
+                send_Path(req,res,"/rendeles.html")
+            }
             else if (req.url == "/registration"){
                 console.log(body);
                 a = registration(body)
@@ -210,6 +234,19 @@ else if(req.method == "POST"){
                     res.writeHead(200);
                     res.end(data);
                 });
+            }
+            else if (body == "GET_JSON_MENU"){
+                try {
+                    var rawdata = fs.readFileSync("json_Menus/"+get_File_Name()+'.json');
+                    var data = JSON.parse(rawdata);
+                } catch (error) {
+                    var data = JSON.parse('{"error" : "Még nincs ilyen file"}')
+                }
+                data = JSON.stringify(data);
+                console.log(data)
+                res.setHeader("content-text", "application/json");
+                res.writeHead(200);
+                res.end(data);
             }
             else{
                 get_File = false;
