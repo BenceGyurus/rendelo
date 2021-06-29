@@ -25,6 +25,29 @@ function create_Html_From_Json(data){
     data = JSON.stringify(data);
     fileName = get_File_Name();
     fs.writeFileSync("json_menus/"+fileName+'.json', data);
+    for (var i = 0; i < list.length; i++){
+        for (var k = 0; k < list[i].length; k++){
+            var path = "";
+            if (list[i][k] != "none"){
+            text = "<h3>"+list[i][k]+"</h3>";
+            if (k == 0){
+                path = fileName+"/soup"+(i+1)+".html";
+            }
+            else{
+                path = fileName+"/menu"+(i+1)+"_"+(k)+".html";
+
+            }
+            console.log(text);
+            fs.writeFile(path, text, function(err){
+                if (err){
+                    fs.mkdir(fileName, function(err) {
+                        fs.writeFile(path, text, function(err){});
+                    })
+                }
+            });
+        }
+        }
+    }
 }
 
 function send_Path(req, res, path){
@@ -200,11 +223,17 @@ else if(req.method == "POST"){
             }
             else if (req.url == "/rendeles.html") {
                 data = load_JSON_File(body);
+                console.log(data);
+                fs.writeFileSync("json_Orders/"+data.user_Id+"_"+data.number_Of_Day+"_"+get_File_Name()+".json", body);
                 send_Path(req, res, path);
             }
             else if (req.url == "/SET_MENU"){
                 create_Html_From_Json(load_JSON_File(body));
                 send_Path(req,res,"/rendeles.html")
+            }
+            else if (body == "MENU"){
+                folder_Name = get_File_Name();
+                send_Path(req,res, "/"+folder_Name+req.url);
             }
             else if (req.url == "/registration"){
                 console.log(body);
@@ -235,6 +264,22 @@ else if(req.method == "POST"){
                     res.end(data);
                 });
             }
+            else if (path == "/GET_USER_DATA"){
+                data = load_JSON_File(body);
+                file_Name = String(data.id)+"_"+String(data.number_Of_Day)+"_"+get_File_Name();
+                console.log(file_Name);
+                try {
+                    var rawdata = fs.readFileSync("json_Orders/"+file_Name+'.json');
+                    var data = JSON.parse(rawdata);
+                } catch (error) {
+                    var data = JSON.parse('{"error" : "Még nincs ilyen file"}')
+                }
+                data = JSON.stringify(data);
+                res.setHeader("content-text", "application/json");
+                res.writeHead(200);
+                res.end(data);
+
+            }
             else if (body == "GET_JSON_MENU"){
                 try {
                     var rawdata = fs.readFileSync("json_Menus/"+get_File_Name()+'.json');
@@ -243,10 +288,16 @@ else if(req.method == "POST"){
                     var data = JSON.parse('{"error" : "Még nincs ilyen file"}')
                 }
                 data = JSON.stringify(data);
-                console.log(data)
+                //console.log(data)
                 res.setHeader("content-text", "application/json");
                 res.writeHead(200);
                 res.end(data);
+            }
+            else if(path == "/GET_TODAY_SOUP"){
+                data = load_JSON_File(body);
+                file_Path = "/"+get_File_Name()+"/"+ "soup" + data.number_Of_Day + ".html";
+                console.log(file_Path);
+                send_Path(req, res, file_Path);       
             }
             else{
                 get_File = false;

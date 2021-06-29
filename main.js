@@ -2,10 +2,12 @@
 data_List = ["", "null", ""]; //name - soup  - menu
 errors = [];
 number_Of_Menu = "0";
-function query_Data(url,method, callback){
+function query_Data(url,name, callback){
     data = "";
    var req = new XMLHttpRequest();
    req.onreadystatechange = function(){
+       console.log(this.readyState);
+       console.log(this.responseText);
        if (this.readyState == 4 && this.status == 200){
            callback(this.responseText);
        }
@@ -13,8 +15,8 @@ function query_Data(url,method, callback){
            callback("<h1 style = 'color: red; font-size: 20px;'>Nem sikerült lekérdezni a menüt</h1>");
        }
    };
-   req.open(method, url);
-   req.send();
+   req.open("POST", url);
+   req.send(name);
    console.log(data);
    return data;
 }
@@ -45,7 +47,7 @@ function looking_Menu(number_Of_Menu){
     id = "diplay_Menu"+number_Of_Menu;
     if (document.getElementById(id).style.display != "block"){
         document.getElementById(id).style.display = "block"
-    query_Data("menu"+window.number_Of_Selected_Day+number_Of_Menu+".html", "GET", element_Menu);
+    query_Data("menu"+window.number_Of_Selected_Day+"_"+number_Of_Menu+".html", "MENU", element_Menu);
     }
     else{
         document.getElementById(id).style.display = "none";
@@ -123,4 +125,42 @@ function send(){
             user_Id : window.user_Id
     });
     req.send(dic);
+}
+
+function query_Soup(){
+    var req = new XMLHttpRequest();
+    req.onreadystatechange = function(){
+        if (this.readyState == 4 && this.status == 200){
+            if (this.responseText != "ERROR"){
+                document.getElementById("name_Of_Soup").innerHTML = this.responseText;
+            }
+        }
+    }
+    req.open("POST", "GET_TODAY_SOUP");
+    req.setRequestHeader("content-type", "application/json");
+    data = JSON.stringify({
+        number_Of_Day : window.number_Of_Selected_Day
+    })
+    req.send(data);
+}
+
+function query_Old_Data(){
+    req = new XMLHttpRequest();
+    req.onreadystatechange = function(){
+        if (this.readyState == 4 && this.status == 200){
+            data = JSON.parse(this.responseText);
+            if (!data.error){
+            soup(data.soup);
+            choose_Menu(data.menu)
+        }
+        }
+    };
+    req.open("POST", "GET_USER_DATA");
+    req.setRequestHeader("content-text", "application/json");
+    data = JSON.stringify({
+        id : window.user_Id,
+        number_Of_Day: window.number_Of_Selected_Day,
+    });
+    req.send(data);
+    query_Soup();
 }

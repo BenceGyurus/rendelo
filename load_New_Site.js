@@ -7,6 +7,9 @@ function get_New_Site(site, token){
                 if (site == "select.html"){
                     element_Days();
                 }
+                else if (site == "index.html"){
+                    query_Old_Data();
+                }
             }
         };
         req.open("POST", site);
