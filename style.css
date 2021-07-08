@@ -53,6 +53,7 @@ input{
     margin: auto;
     padding: 5px;
     border-radius: 10px;
+    overflow-x: auto;
 }
 
 .login{
@@ -135,5 +136,15 @@ input{
 }
 
 #name_Of_Soup{
+    text-align: center;
+}
+
+.back{
+    border: 3px solid black;
+    font-size: 17px;
+    font-weight: bold;
+    padding: 5px;
+    border-radius: 10px;
+    width: max-content;
     text-align: center;
 }

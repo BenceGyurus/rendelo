@@ -109,10 +109,6 @@ function send(){
    req.onreadystatechange = function(){
        if (this.readyState == 4 && this.status == 200){
             document.body.innerHTML = this.responseText;
-            window.user_Id = "";
-            window.token = "";
-            window.data_List = [];
-            window.data = [];
        }
    };
    req.open("POST", "rendeles.html");
@@ -134,6 +130,10 @@ function query_Soup(){
             if (this.responseText != "ERROR"){
                 document.getElementById("name_Of_Soup").innerHTML = this.responseText;
             }
+        }
+        else if (this.status == 404 && this.readyState == 4){
+            get_New_Site("select.html", window.token);
+            alert("Ennek a napnak a menüje még nincsen feltöltve");
         }
     }
     req.open("POST", "GET_TODAY_SOUP");

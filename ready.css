@@ -4,7 +4,7 @@ body{
 
 img{
     width: 60%;
-    position: absolute;
+    position: relative;
     left: 20%;
 }
 
@@ -12,4 +12,16 @@ h1{
     text-align: center;
     color: white;
     margin: 40px;
+}
+.back{
+    border: 3px solid white;
+    font-size: 17px;
+    font-weight: bold;
+    padding: 5px;
+    border-radius: 10px;
+    width: max-content;
+    text-align: center;
+    position: relative;
+    margin: 20px auto;
+    color: white;
 }

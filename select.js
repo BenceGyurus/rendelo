@@ -2,7 +2,7 @@ var selected_Day;
 var number_Of_Selected_Day;
 function element_Days(){
     name_Of_Day = ["Vasárnap", ["Hétfő", "monday"], ["Kedd", "tuesday"], ["Szerda", "wensday"], ["Csütörtök", "thursday"], ["Péntek", "friday"], "Szombat"]
-    var d = Number(new Date().getDay());
+    var d = 1//Number(new Date().getDay());
     document.getElementById("day_Grid").innerHTML = "";
     if (d < 6 && d >= 1){
         for(let i = d; i < 6; i++){

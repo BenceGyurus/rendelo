@@ -10,6 +10,10 @@ function get_New_Site(site, token){
                 else if (site == "index.html"){
                     query_Old_Data();
                 }
+                else if (site == "profile_Site.html"){
+                    //console.log("Meghívva");
+                    query_All_Profile_Data();
+                }
             }
         };
         req.open("POST", site);

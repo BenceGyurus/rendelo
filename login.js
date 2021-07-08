@@ -1,4 +1,5 @@
 var user_Id;
+var user_Name;
 function create_Json_Document(){
     var file = {"userName": document.getElementById("userName").value,"password": document.getElementById("password").value};
     return file;
@@ -18,7 +19,8 @@ function send_Json_Document(){
             if (!data.error){
                 window.token = data.token;
                 window.user_Id = data.id;
-                get_New_Site("select.html", data.token);
+                get_New_Site("profile_Site.html", data.token);
+                window.user_Name = file.userName;
             }
             else{
                 document.getElementById("errors_Log").innerHTML = data.error;
