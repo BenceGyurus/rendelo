@@ -6,7 +6,7 @@ function element_Datas(data){
         else{
             document.getElementById("menu_Row").innerHTML += "<div class = 'data' onclick = 'get_New_Site(\""+data.data[i][1]+"\", window.token)'>"+data.data[i][0]+"</div>"
         }
-        document.getElementById("name").innerHTML = window.user_Name;
+        document.getElementById("name").innerHTML = window.full_Name;
     }
 }
 

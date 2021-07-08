@@ -268,7 +268,7 @@ else if(req.method == "POST"){
                     var data = '{"error": "Váratlan hiba történt bejelenetkezés közben"}'
                     if (rows.length > 0){
                         token_ = login(body, req.socket.remoteAddress, rows[0].id);
-                        data = '{"token":'+token_+', "id" : '+rows[0].id+'}';
+                        data = '{"token":'+token_+', "id" : '+rows[0].id+', "full_Name" :"'+rows[0].full_Name+'"}';
                         //data = JSON.parse(json);
                     }
                     else{
@@ -279,7 +279,7 @@ else if(req.method == "POST"){
                     res.end(data);
                 });
             }
-            else if (req.url == "/rendeles.html") {
+            else if (req.url == "/rendeles.html") {                //rendelés leadás
                 send_Path(req, res, path);
                 data = load_JSON_File(body);
                 //console.log(data);
@@ -293,7 +293,7 @@ else if(req.method == "POST"){
                     console.log(err);
                     console.log(rows);
                     if (rows.length < 1){
-                        db.run("INSERT INTO orders VALUES (?,?,?,?,?,?)", [data.user_Id, data.menu, data.soup, data.day ,data.number_Of_Day, rows2[0].full_Name], function(err){});
+                        db.run("INSERT INTO orders VALUES (?,?,?,?,?,?)", [data.user_Id, data.menu, data.soup, data.day ,data.number_Of_Day, data.full_Name], function(err){});
                     }
                     else{
                         db.run("UPDATE orders SET number_Of_Menu = ? WHERE id = ? AND number_Of_Day = ?", [data.menu, data.user_Id, data.number_Of_Day], function(err){});
@@ -380,7 +380,6 @@ else if(req.method == "POST"){
                 var db = new sqlite3.Database('users.db');
                 var real_Id;
                 for (var i = 0; i < users.length; i++){
-                    //console.log(users[i][0], req.socket.remoteAddress);
                     if (users[i][0] == req.socket.remoteAddress){
                         real_Id = users[i][2];
                     }
@@ -411,12 +410,12 @@ else if(req.method == "POST"){
                 const sqlite3 = require('sqlite3').verbose();
                 var db = new sqlite3.Database("orders_Dbs/"+get_File_Name()+".db");
                 db.all("SELECT * FROM orders", [], function(err, rows){
-                    var text_Json;
                     console.log(rows);
-                    for (var i = 0; i <rows.length; i++){
-                        text_Json += JSON.stringify(rows[i]);
-                    }
+                    text_Json = JSON.stringify({data : rows});
                     console.log(text_Json);
+                    res.setHeader("content-text", "application/json");
+                    res.writeHead(200);
+                    res.end(text_Json);
                 });
             }
             else{

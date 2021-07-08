@@ -118,7 +118,8 @@ function send(){
             menu: Number(window.data_List[2]),
             day: window.selected_Day,
             number_Of_Day: window.number_Of_Selected_Day,
-            user_Id : window.user_Id
+            user_Id : window.user_Id,
+            full_Name : window.full_Name
     });
     req.send(dic);
 }

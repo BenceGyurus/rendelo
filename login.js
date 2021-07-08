@@ -1,11 +1,16 @@
 var user_Id;
 var user_Name;
+var full_Name;
 function create_Json_Document(){
     var file = {"userName": document.getElementById("userName").value,"password": document.getElementById("password").value};
     return file;
 }
 
 var token;
+
+function read_Json_File(file_Data){
+    return JSON.parse(file_Data);
+}
 
 function send_Json_Document(){
     if (document.getElementById("userName").value && document.getElementById("password").value){
@@ -15,12 +20,15 @@ function send_Json_Document(){
         if (this.readyState == 4 && this.status == 200){
             data = this.responseText;
             data = String(data);
-            data = JSON.parse(data);
+            console.log(data);
+            data = read_Json_File(data);
             if (!data.error){
                 window.token = data.token;
                 window.user_Id = data.id;
                 get_New_Site("profile_Site.html", data.token);
                 window.user_Name = file.userName;
+                window.full_Name = data.full_Name;
+                console.log(window.full_Name);
             }
             else{
                 document.getElementById("errors_Log").innerHTML = data.error;

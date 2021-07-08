@@ -1,6 +1,7 @@
 function element_Data(data){
     data = JSON.parse(data);
-
+    console.log(data);
+    
 }
 
 function query_Orders(){

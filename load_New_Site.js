@@ -18,6 +18,8 @@ function get_New_Site(site, token){
         };
         req.open("POST", site);
         req.setRequestHeader("content-text", "application/json");
+        if (typeof token == "number"){
         req.send(token);
+        }
     }
 }
