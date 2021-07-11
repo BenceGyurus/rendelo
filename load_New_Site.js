@@ -1,11 +1,12 @@
 function get_New_Site(site, token){
+    console.log(token);
     if (token){
     var req = new XMLHttpRequest();
         req.onreadystatechange = function() {
             if (this.readyState == 4 && this.status == 200){
                 document.body.innerHTML = this.responseText;
                 if (site == "select.html"){
-                    element_Days();
+                    query_Time();
                 }
                 else if (site == "index.html"){
                     query_Old_Data();
@@ -15,6 +16,7 @@ function get_New_Site(site, token){
                     query_All_Profile_Data();
                 }
             }
+            use_Header();
         };
         req.open("POST", site);
         req.setRequestHeader("content-text", "application/json");

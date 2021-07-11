@@ -4,13 +4,23 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="">
+    <link rel="stylesheet" href="orders.css">
     <title>A beérkező rendelések</title>
 </head>
 <body>
     <div class = "header" id = "header_Div">
         <h1 id = "header_Title">Beérkező rendelések</h1>
+        <select id = "day">
+            <option value = "all">Összes</option>
+            <option value = "monday">Hétfő</option>
+            <option value = "tuesday">Kedd</option>
+            <option value = "wensday">Szerda</option>
+            <option value = "thursday">Csütörtök</option>
+            <option value = "friday">Péntek</option>
+        </select>
+        <input type = "button" value = "Megjelenít" onclick = "query_Orders()">
     </div>
+    <div id = "orders_Data"></div>
     <div id = "orders"></div>
 </body>
 <script src = "orders.js"></script>

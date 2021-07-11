@@ -1,17 +1,17 @@
 *{
     font-family: "ubuntu", sans-serif;
-    color: white;
+    color: black;
     user-select:  none;
     -webkit-user-select: none;
 }
 
 body{
     background: linear-gradient(to right, #68e85d, #1cbd0d);
+    overflow-y: none;
 }
-
 .day{
     width: 120px;
-    border: 3px solid white;
+    border: 3px solid black;
     border-radius: 20px;
     height: 60px;
     font-size: 25px;

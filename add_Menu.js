@@ -18,14 +18,12 @@ function add_Time_Setter(){
     var min = 60;
     var element_Text = '';
     element_Text += "<div style ='padding: 20px; margin: 10px auto; border: 3px solid black; width: 50%; border-radius: 10px;'><select id = 'hours'>";
-    for (var i = 1; i < hours; i++){
+    for (var i = 0; i < hours; i++){
         element_Text += "<option value = '"+i+"' style = 'margin: 3px auto; border: 3px solid black; padding: 4px;' >"+i+"</option>";
     }
     element_Text += "</select>";
-    //document.getElementById("conteiner").innerHTML += element_Text+"<label>:</label>";
-    //element_Text = "";
     element_Text += "<select id = 'min'>";
-    for(var i = 1; i < min; i++){
+    for(var i = 0; i < min; i++){
         element_Text += "<option value = '"+i+"' style = 'margin: 3px auto; border: 3px solid black; padding: 4px;'>"+i+"</option>";
     }
     element_Text +="</select></div>";
@@ -35,6 +33,9 @@ generate_Days();
 add_Time_Setter();
 
 function create_Json_File(){
+    var hours = document.getElementById("hours").value;
+    var min = document.getElementById("min").value;
+    console.log(hours, min);
     var text_File = "{"
     var days = [["Hétfő", "monday"],["Kedd","tuesday"], ["Szerda", "wensday"], ["Csütörtök", "thursday"], ["Péntek", "friday"]];
     for (var i = 0; i < days.length; i++){
@@ -60,6 +61,7 @@ function create_Json_File(){
             text_File += '"'+days[i][1]+'"'+ ':["'+list[0]+'","'+list[1]+'","'+list[2]+'","'+list[3]+'"]';
         }
     }
+    text_File += ',"send_Time": ['+hours+', '+min+']'
     text_File += "}";
     file = text_File;
     var req = new XMLHttpRequest;
@@ -92,6 +94,8 @@ function insert_To_Inputs(data){
             }
         }
     }
+    document.getElementById("hours").value = data.send_Time[0];
+    document.getElementById("min").value = data.send_Time[1];
 }
 
 function query_Json_Data(){

@@ -418,6 +418,19 @@ else if(req.method == "POST"){
                     res.end(text_Json);
                 });
             }
+            else if(body == "GET_SEND_TIME"){
+                try{
+                    full_Data = fs.readFileSync('json_Menus/'+get_File_Name()+".json");
+                    full_Data = JSON.parse(full_Data);
+                    data = JSON.stringify({send_Time : full_Data.send_Time});
+                }catch{
+                    data = JSON.stringify({error : "file not found"});
+                }
+                console.log(data);
+                res.setHeader("content-text", "application/json");
+                res.writeHead(200);
+                res.end(data);
+            }
             else{
                 get_File = false;
                 request = false;
