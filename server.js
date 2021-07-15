@@ -116,11 +116,6 @@ function generate_Token(){
     }
     return token;
 }
-
-function registration(data){
-    //request = true;
-    
-}
 function encryption(text){
     var result = "";
     for (var i = 0; i < text.length; i++){
@@ -140,12 +135,14 @@ function login(data, ip, id){
     change = false
     token = generate_Token();
     for (var i = 0; i < users.length; i++){
+        if (users[i]){
         if (ip == users[i][0]){
             change = true;
             users[i][1] = token;
             users[i][2] = id;
         }
     }
+}
     if (!change){
     users.push([ip,token, id]);
     }
@@ -213,9 +210,10 @@ const requestListener = function(req, res) {
         path = "error.html";
         extension = "html";
     }
-    if (path == "/add_Menu.html"){
+    if (path == "/add_Menu.html" || path == "/orders.html"){
         var id;
         for (var i = 0; i < users.length; i++){
+            if (users[i]){
             if (users[i][0] == req.socket.remoteAddress){
                 id = users[i][2];
                 const sqlite3 = require('sqlite3').verbose();
@@ -231,6 +229,7 @@ const requestListener = function(req, res) {
                 });
                 db.close();
             } 
+        }
         }
         if(!id){
             send_With_Get_Method(res, "/error.html");
@@ -380,9 +379,11 @@ else if(req.method == "POST"){
                 var db = new sqlite3.Database('users.db');
                 var real_Id;
                 for (var i = 0; i < users.length; i++){
+                    if (users[i]){
                     if (users[i][0] == req.socket.remoteAddress){
                         real_Id = users[i][2];
                     }
+                }
                 }
                 console.log(real_Id);
                 data = load_JSON_File(body);
@@ -418,6 +419,16 @@ else if(req.method == "POST"){
                     res.end(text_Json);
                 });
             }
+            else if(body == "LOGOUT"){
+                for(var i = 0; i < users.length; i++){
+                    if (users[i]){
+                    if (users[i][0] == req.socket.remoteAddress){
+                        delete users[i];
+                    }
+                }
+                }
+                console.log(users);
+            }
             else if(body == "GET_SEND_TIME"){
                 try{
                     full_Data = fs.readFileSync('json_Menus/'+get_File_Name()+".json");
@@ -437,10 +448,12 @@ else if(req.method == "POST"){
                 json_Token = load_JSON_File(body);
                 token = json_Token;
                 for (var i = 0; i < users.length; i++){
+                    if(users[i]){
                     if (users[i][0] == req.socket.remoteAddress){
                      if(users[i][1] == token){
                         send_Path(req, res, path);
-                    }  
+                    }
+                }  
                     }
                 }
             
@@ -450,7 +463,8 @@ else if(req.method == "POST"){
     
 }
 const server = http.createServer(requestListener);
+var port = 8000;
 dns.lookup(os.hostname(), function (err, add, fam){
-    console.log("http://"+add+":8000");
-    server.listen(8000, add);
+    console.log("http://"+add+":"+port);
+    server.listen(port, add);
 })

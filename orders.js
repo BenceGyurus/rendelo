@@ -1,4 +1,20 @@
+var str_Data = "";
+var show_User = false
+
+
+function show_Users(){
+    if (window.show_User){
+        document.getElementById("orders").innerHTML = "";
+        window.show_User = false;
+    }
+    else{
+        document.getElementById("orders").innerHTML = window.str_Data;
+        window.show_User = true;
+    }
+}
+
 function element_Data(data){
+    window.str_Data = "";
     document.getElementById("orders").innerHTML = "";
     document.getElementById("orders_Data").innerHTML = "";
     data = JSON.parse(data);
@@ -24,7 +40,10 @@ function element_Data(data){
                 str += "<h2 class='day'> Nap:" + days[j][0] + "</h2>";               
             }           
         }
-        document.getElementById('orders').innerHTML += str;
+        //document.getElementById('orders').innerHTML += str;
+        str += "</div>";
+        window.str_Data += str;
+        console.log(window.str_Data);
     }
     }
     for (var i = 0; i < menus.length; i++){
@@ -47,7 +66,6 @@ function element_Data(data){
         }
     }
     }
-    console.log(menus);
     
 }
 

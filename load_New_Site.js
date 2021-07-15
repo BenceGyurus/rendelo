@@ -14,6 +14,7 @@ function get_New_Site(site, token){
                 else if (site == "profile_Site.html"){
                     //console.log("Meghívva");
                     query_All_Profile_Data();
+                    query_Log_Out_Url();
                 }
             }
             use_Header();
