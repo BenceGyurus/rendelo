@@ -17,7 +17,7 @@ function element_Days(time_Json){
     console.log(time);
     selected = false
     name_Of_Day = ["Vasárnap", ["Hétfő", "monday"], ["Kedd", "tuesday"], ["Szerda", "wensday"], ["Csütörtök", "thursday"], ["Péntek", "friday"], "Szombat"]
-    var d = 1//Number(new Date().getDay());
+    var d = Number(new Date().getDay());
     document.getElementById("day_Grid").innerHTML = "";
     if (d < 6 && d >= 1){
         for(let i = d; i < 6; i++){
